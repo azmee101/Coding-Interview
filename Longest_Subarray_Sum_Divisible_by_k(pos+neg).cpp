@@ -1,66 +1,62 @@
 
 // https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_6682399
+// https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_5713505
+
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long 
+#define ll long long int
 
 #define NEED_FOR_SPEED ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-int longestSubarrayWithSumK(vector<int> a, long long k){
 
+int longestSubarrayWithSumK(vector<int> a, long long k) {
+    int mx = 0;
+    unordered_map<long long, int> mp;
+    long long sum = 0;
     int n = a.size();
     long long pre[n+1] = {0};
 
     for(int i = 1; i <= n; i++){
         pre[i] = pre[i-1] + a[i-1];
     }
-
-    unordered_map<ll, ll> mp;
-    ll mx = INT_MIN;
-
+    
     for(int i = 1; i <= n; i++){
 
-        if(pre[i] >= k){
+        long long rem = pre[i] - k;
 
-            ll rem = pre[i] - k;
-
-            if(mp[rem] != 0 || rem == 0){
-
-                mx = max(mx, i-mp[rem]);
-            }
-
-            mp[pre[i]] = i;
+        if(pre[i] == k){
+            mx = max(mx, i);
         }
 
-        else if(mp[pre[i]] == 0){
+        else if(mp[rem]){
+
+            mx = max(mx, i-mp[rem]);
+        }
+
+        if(mp[pre[i]] == 0){
             mp[pre[i]] = i;
         }
     }
     return mx;
-
 }
+
 
 void solve(){
     int n, k; cin >> n >> k;
-    vector<int> v(n);
-
+    vector<int> a(n);
     for(int i = 0; i < n; i++){
-        cin >> v[i];
+        cin >> a[i];
     }
-
-
-    cout << longestSubarrayWithSumK(v, k) << '\n';
-
+    cout << longestSubarrayWithSumK(a, k) << '\n';
     return;
 }
 
 int32_t main()
 {
     NEED_FOR_SPEED;
-    int t = 1;
-    // cin >> t;
+    int t; cin >> t;
     while(t--){
         solve();
     }
