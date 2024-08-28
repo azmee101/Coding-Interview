@@ -31,7 +31,7 @@ int longestSubarrayWithSumK(vector<int> a, long long k){
                 mx = max(mx, i-mp[rem]);
             }
 
-            // mp[pre[i]] = i;
+            mp[pre[i]] = i;
         }
 
         else if(mp[pre[i]] == 0){
